@@ -5,7 +5,7 @@ const { json } = require('body-parser');
 
 const app = express();
 
-const { connect, trails } = require('./db/database');
+const { connect, trails, posts } = require('./db/database');
 
 const PORT = process.env.PORT || 3000;
 app.set('port', PORT);
@@ -38,12 +38,24 @@ app.use(function (req, res, next) {
 // API
 
 const Trails = trails();
+const Posts = posts();
 
 app.get('/api/trails', (req, res, err) => {
 	Trails.find()
 		.then(trails => {
-			console.log("trails:", trails);
-			res.json( trails ); //creates an object from a JSON
+			// console.log("trails:", trails);
+			res.json( trails );
+		})
+		.catch(err)
+})
+
+app.get('/api/posts/:id', (req, res, err) => {
+	// const trailId = req.params.id;
+	console.log("trailId", trailId);
+	Posts.find( { postTrailId: trailId })
+		.then(posts => {
+			// console.log("posts:", posts);
+			res.json( posts );
 		})
 		.catch(err)
 })

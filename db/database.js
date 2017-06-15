@@ -22,3 +22,18 @@ module.exports.trails = () => mongoose.model('trail', {
 	numOpenTickets: Number,
 	imgUrl: String
 })
+
+module.exports.posts = () => mongoose.model('post', {
+	description: String,
+	hasPhoto: Boolean,
+	photoUrl: String,
+	postDate: String,
+	postFormatDate: String,
+	postTrailId: String,
+	postType: Number,
+	postTypeString: String,
+	ticketopen: Boolean,
+	userId: Number,
+	userName: String,
+	userImgUrl: String
+})
