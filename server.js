@@ -50,8 +50,8 @@ app.get('/api/trails', (req, res, err) => {
 })
 
 app.get('/api/posts/:id', (req, res, err) => {
-	// const trailId = req.params.id;
-	console.log("trailId", trailId);
+	const trailId = req.params.id;
+	// console.log("trailId", trailId);
 	Posts.find( { postTrailId: trailId })
 		.then(posts => {
 			// console.log("posts:", posts);
