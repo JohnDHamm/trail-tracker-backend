@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const MONGODB_URL = process.env.MONGODB_URL || 'mongodb://localhost:27017/trailtracker'
 const PORT = process.env.PORT || 3000
 
-// const MONGODB_URL = 'mongodb://<dbuser>:<password>@ds047666.mlab.com:47666/miniauth'
+// const MONGODB_URL ='mongodb://<dbuser>:<password>@ds127892.mlab.com:27892/trailtracker'
 
 mongoose.Promise = Promise
 
