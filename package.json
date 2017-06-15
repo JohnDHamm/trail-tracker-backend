@@ -1,0 +1,24 @@
+{
+  "name": "trail-tracker-backend",
+  "version": "1.0.0",
+  "description": "Node-express-mongoDB backend for Trail tracker react app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JohnDHamm/trail-tracker-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JohnDHamm/trail-tracker-backend/issues"
+  },
+  "homepage": "https://github.com/JohnDHamm/trail-tracker-backend#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "mongoose": "^4.10.6"
+  }
+}
