@@ -23,7 +23,10 @@ const Trails = trails();
 
 app.get('/api/trails', (req, res, err) => {
 	Trails.find()
-		.then(trails => res.json( { trails } ))
+		.then(trails => {
+			console.log("trails:", trails);
+			res.json( { trails } ); //creates an object from a JSON
+		})
 		.catch(err)
 })
 
