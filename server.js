@@ -51,10 +51,11 @@ app.get('/api/trails', (req, res, err) => {
 
 app.get('/api/posts/:id', (req, res, err) => {
 	const trailId = req.params.id;
-	console.log("trailId", trailId);
+	// console.log("trailId", trailId);
 	Posts.find( { postTrailId: trailId })
+		.sort( { postDate: -1 } )
 		.then(posts => {
-			console.log("posts:", posts);
+			// console.log("posts:", posts);
 			res.json( posts );
 		})
 		.catch(err)
