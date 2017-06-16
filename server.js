@@ -3,9 +3,13 @@
 const express = require('express');
 const { json } = require('body-parser');
 const request = require('request');
-const { getWeatherAPIKey } = require('./creds/creds');
-const weatherAPIKey = getWeatherAPIKey();
+
+//*******  testing on localhost:3000 *****************************************
+// const { getWeatherAPIKey } = require('./creds/creds');
+// const weatherAPIKey = process.env.WEATHER_API_KEY || getWeatherAPIKey();
 // console.log("weatherAPIKey", weatherAPIKey);
+
+const weatherAPIKey = process.env.WEATHER_API_KEY;
 
 const app = express();
 
