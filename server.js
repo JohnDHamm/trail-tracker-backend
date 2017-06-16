@@ -2,6 +2,10 @@
 
 const express = require('express');
 const { json } = require('body-parser');
+const request = require('request');
+const { getWeatherAPIKey } = require('./creds/creds');
+const weatherAPIKey = getWeatherAPIKey();
+// console.log("weatherAPIKey", weatherAPIKey);
 
 const app = express();
 
@@ -43,7 +47,6 @@ const Posts = posts();
 app.get('/api/trails', (req, res, err) => {
 	Trails.find()
 		.then(trails => {
-			// console.log("trails:", trails);
 			res.json( trails );
 		})
 		.catch(err)
@@ -51,15 +54,31 @@ app.get('/api/trails', (req, res, err) => {
 
 app.get('/api/posts/:id', (req, res, err) => {
 	const trailId = req.params.id;
-	// console.log("trailId", trailId);
 	Posts.find( { postTrailId: trailId })
 		.sort( { postDate: -1 } )
 		.then(posts => {
-			// console.log("posts:", posts);
 			res.json( posts );
 		})
 		.catch(err)
 })
+
+app.get('/api/weather/current/:latlon', (req, res, err) => {
+	const coordinates = req.params.latlon;
+	// console.log("coordinates", coordinates);
+	const weatherCallURL = `https://api.wunderground.com/api/${weatherAPIKey}/conditions/q/${coordinates}.json`;
+	request.get(weatherCallURL, (err, _, body) => {
+    res.send(body);
+  });
+})
+
+// app.get('/api/weather/radar/:latlon', (req, res, err) => {
+// 	const coordinates = req.params.latlon;
+// 	console.log("coordinates", coordinates);
+// 	const weatherCallURL = `https://api.wunderground.com/api/${weatherAPIKey}/conditions/q/${coordinates}.json`;
+// 	request.get(weatherCallURL, (err, _, body) => {
+//     res.send(body);
+//   });
+// })
 
 // app.post('/api/tasks', (req, res, err) => {
 // 	const newTask = req.body;
