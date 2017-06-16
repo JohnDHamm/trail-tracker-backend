@@ -5,11 +5,11 @@ const { json } = require('body-parser');
 const request = require('request');
 
 //*******  testing on localhost:3000 *****************************************
-// const { getWeatherAPIKey } = require('./creds/creds');
-// const weatherAPIKey = process.env.WEATHER_API_KEY || getWeatherAPIKey();
-// console.log("weatherAPIKey", weatherAPIKey);
+const { getWeatherAPIKey } = require('./creds/creds');
+const weatherAPIKey = process.env.WEATHER_API_KEY || getWeatherAPIKey();
+console.log("weatherAPIKey", weatherAPIKey);
 
-const weatherAPIKey = process.env.WEATHER_API_KEY;
+// const weatherAPIKey = process.env.WEATHER_API_KEY;
 
 const app = express();
 
@@ -75,14 +75,20 @@ app.get('/api/weather/current/:latlon', (req, res, err) => {
   });
 })
 
-// app.get('/api/weather/radar/:latlon', (req, res, err) => {
-// 	const coordinates = req.params.latlon;
-// 	console.log("coordinates", coordinates);
-// 	const weatherCallURL = `https://api.wunderground.com/api/${weatherAPIKey}/conditions/q/${coordinates}.json`;
-// 	request.get(weatherCallURL, (err, _, body) => {
-//     res.send(body);
-//   });
-// })
+app.get('/api/weather/radar/:latlon', (req, res, err) => {
+	// const coordinates = req.params.latlon;
+	// console.log("coordinates", coordinates);
+	const lat = req.params.latlon.split(',')[0];
+	const lon = req.params.latlon.split(',')[1];
+	console.log("lat:", lat, "lon:", lon);
+
+	const weatherCallURL = `https://api.wunderground.com/api/${weatherAPIKey}/radar/image.gif?centerlat=${lat}&centerlon=${lon}&radius=50&width=300&height=300&newmaps=1`;
+	request.get(weatherCallURL, (err, _, body) => {
+		console.log("body", body);
+    res.send(body);
+  });
+})
+
 
 // app.post('/api/tasks', (req, res, err) => {
 // 	const newTask = req.body;
