@@ -7,7 +7,6 @@ const request = require('request');
 //*******  testing on localhost:3000 *****************************************
 // const { getWeatherAPIKey } = require('./creds/creds');
 // const weatherAPIKey = process.env.WEATHER_API_KEY || getWeatherAPIKey();
-// console.log("weatherAPIKey", weatherAPIKey);
 
 const weatherAPIKey = process.env.WEATHER_API_KEY;
 
@@ -72,7 +71,7 @@ app.get('/api/weather/forecast/:latlon', (req, res, err) => {
 	const coordinates = req.params.latlon;
 	const weatherCallURL = `https://api.wunderground.com/api/${weatherAPIKey}/forecast/q/${coordinates}.json`;
 	request.get(weatherCallURL, (err, _, body) => {
-		console.log("body", body);
+		// console.log("body", body);
     res.send(body);
   });
 })
@@ -82,10 +81,11 @@ app.get('/api/weather/radar/:latlon', (req, res, err) => {
 	const lon = req.params.latlon.split(',')[1];
 
 	const weatherCallURL = `https://api.wunderground.com/api/${weatherAPIKey}/radar/image.gif?centerlat=${lat}&centerlon=${lon}&radius=50&width=300&height=300&newmaps=1`;
-	request.get(weatherCallURL, (err, _, body) => {
-		console.log("body", body);
-    res.send(body);
-  });
+	res.send(weatherCallURL);
+	// request.get(weatherCallURL, (err, _, body) => {
+ //    // res.send(body);
+
+ //  });
 })
 
 
