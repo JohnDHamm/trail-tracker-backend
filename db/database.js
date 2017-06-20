@@ -33,7 +33,7 @@ module.exports.posts = () => mongoose.model('post', {
 	postType: Number,
 	postTypeString: String,
 	ticketopen: Boolean,
-	userId: Number,
+	userId: String,
 	userName: String,
 	userImgUrl: String
 })
