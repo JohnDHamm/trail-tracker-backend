@@ -5,10 +5,10 @@ const { json } = require('body-parser');
 const request = require('request');
 
 //*******  testing on localhost:3000 *****************************************
-// const { getWeatherAPIKey } = require('./creds/creds');
-// const weatherAPIKey = process.env.WEATHER_API_KEY || getWeatherAPIKey();
+const { getWeatherAPIKey } = require('./creds/creds');
+const weatherAPIKey = process.env.WEATHER_API_KEY || getWeatherAPIKey();
 
-const weatherAPIKey = process.env.WEATHER_API_KEY;
+// const weatherAPIKey = process.env.WEATHER_API_KEY;
 
 const app = express();
 
@@ -59,6 +59,14 @@ app.get('/api/posts/:id', (req, res, err) => {
 		.catch(err)
 })
 
+app.post('/api/post', (req, res, err) => {
+	const newPost = req.body;
+	console.log("newPost", newPost);
+	Posts.create(newPost)
+		.then(data => res.json(data))
+		.catch(err)
+})
+
 app.get('/api/weather/current/:latlon', (req, res, err) => {
 	const coordinates = req.params.latlon;
 	const weatherCallURL = `https://api.wunderground.com/api/${weatherAPIKey}/conditions/q/${coordinates}.json`;
@@ -82,19 +90,17 @@ app.get('/api/weather/radar/:latlon', (req, res, err) => {
 
 	const weatherCallURL = `https://api.wunderground.com/api/${weatherAPIKey}/radar/image.gif?centerlat=${lat}&centerlon=${lon}&radius=50&width=300&height=300&newmaps=1`;
 	res.send(weatherCallURL);
-	// request.get(weatherCallURL, (err, _, body) => {
- //    // res.send(body);
 
- //  });
+	// request.get(weatherCallURL, { encoding: null }, (err, _, body) => {
+ // 		res.set('Content-Type', 'image/gif');
+ // 		const radar ={};
+ //    radar.image = body;
+ //    res.send(body);
+
+  // });
 })
 
 
-// app.post('/api/tasks', (req, res, err) => {
-// 	const newTask = req.body;
-// 	Tasks.create(newTask)
-// 		.then(data => res.json(data))
-// 		.catch(err)
-// })
 
 // app.delete('/api/tasks/:id', (req, res, err) => {
 // 	const id = req.params.id
