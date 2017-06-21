@@ -49,6 +49,12 @@ app.get('/api/trails', (req, res, err) => {
 		.catch(err)
 })
 
+app.patch('/api/trail', (req, res, err) => {
+	Trails.findOneAndUpdate({_id: req.body._id}, req.body, { upsert: true, new: true})
+		.then(data => res.json(data))
+		.catch(err)
+})
+
 app.get('/api/posts/:id', (req, res, err) => {
 	const trailId = req.params.id;
 	Posts.find( { postTrailId: trailId })
