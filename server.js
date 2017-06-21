@@ -61,11 +61,17 @@ app.get('/api/posts/:id', (req, res, err) => {
 
 app.post('/api/post', (req, res, err) => {
 	const newPost = req.body;
-	console.log("newPost", newPost);
 	Posts.create(newPost)
 		.then(data => res.json(data))
 		.catch(err)
 })
+
+app.delete('/api/closeTicket/:id', (req, res, err) => {
+	const id = req.params.id
+	Posts.findOneAndRemove({ _id: id})
+		.then(data => res.json(data))
+		.catch(err)
+	})
 
 app.get('/api/weather/current/:latlon', (req, res, err) => {
 	const coordinates = req.params.latlon;
