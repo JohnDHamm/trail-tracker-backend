@@ -5,10 +5,10 @@ const { json } = require('body-parser');
 const request = require('request');
 
 //*******  testing on localhost:3000 *****************************************
-const { getWeatherAPIKey } = require('./creds/creds');
-const weatherAPIKey = process.env.WEATHER_API_KEY || getWeatherAPIKey();
+// const { getWeatherAPIKey } = require('./creds/creds');
+// const weatherAPIKey = process.env.WEATHER_API_KEY || getWeatherAPIKey();
 
-// const weatherAPIKey = process.env.WEATHER_API_KEY;
+const weatherAPIKey = process.env.WEATHER_API_KEY;
 
 const app = express();
 
