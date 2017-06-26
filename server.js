@@ -3,12 +3,41 @@
 const express = require('express');
 const { json } = require('body-parser');
 const request = require('request');
+const multer = require('multer');
+const AWS = require('aws-sdk');
 
 //*******  testing on localhost:3000 *****************************************
-// const { getWeatherAPIKey } = require('./creds/creds');
-// const weatherAPIKey = process.env.WEATHER_API_KEY || getWeatherAPIKey();
+const { getWeatherAPIKey, getAmazonKeys } = require('./creds/creds');
+const weatherAPIKey = process.env.WEATHER_API_KEY || getWeatherAPIKey();
+const AWSaccessKeyId = process.env.AWS_ACCESS_KEY_ID || getAmazonKeys().access_key_id;
+const AWSsecretAccessKey = process.env.AWS_SECRET_ACCESS_KEY || getAmazonKeys().secret_access_key;
+console.log("AWSaccessKeyId", AWSaccessKeyId);
+console.log("AWSsecretAccessKey", AWSsecretAccessKey);
 
-const weatherAPIKey = process.env.WEATHER_API_KEY;
+// const weatherAPIKey = process.env.WEATHER_API_KEY;
+
+//Amazon S3 config
+const s3 = new AWS.S3();
+s3.config.update(
+  {
+    accessKeyId: AWSaccessKeyId,
+    secretAccessKey: AWSsecretAccessKey,
+    subregion: 'us-east-2',
+  });
+// AWS.config.update(
+//   {
+//     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+//     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+//     subregion: 'us-east-2',
+//   });
+
+// Multer config - memory storage keeps file data in a buffer
+const upload = multer({
+  storage: multer.memoryStorage(),
+  // file size limitation in bytes
+  limits: { fileSize: 52428800 },
+});
+
 
 const app = express();
 
@@ -112,6 +141,22 @@ app.get('/api/weather/radar/:latlon', (req, res, err) => {
   // });
 })
 
+app.post('/api/photoupload', upload.single('theseNamesMustMatch'), (req, res) => {
+  // req.file is the 'theseNamesMustMatch' file
+  // console.log("req.file", req.file);
+  const filename = `open_tickets/${req.file.originalname}`;
+  s3.putObject({
+      Bucket: 'johndhammcodes.trailtracker',
+      Key: filename,
+      Body: req.file.buffer,
+      ACL: 'public-read', // your permisions
+    }, (err, data) => {
+      if (err) return res.status(400).send(err);
+      console.log("data", data);
+      res.send('File uploaded to S3');
+    }
+  )
+})
 
 
 // app.delete('/api/tasks/:id', (req, res, err) => {
@@ -121,11 +166,6 @@ app.get('/api/weather/radar/:latlon', (req, res, err) => {
 // 		.catch(err)
 // })
 
-// app.put('/api/tasks', (req, res, err) => {
-// 	Tasks.findOneAndUpdate({_id: req.body._id}, req.body, { upsert: true, new: true})
-// 		.then(data => res.json(data))
-// 		.catch(err)
-// })
 
 
 connect()
