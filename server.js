@@ -7,27 +7,27 @@ const multer = require('multer');
 const AWS = require('aws-sdk');
 
 //*******  testing on localhost:3000 *****************************************
-const { getWeatherAPIKey, getAmazonKeys } = require('./creds/creds');
-const weatherAPIKey = process.env.WEATHER_API_KEY || getWeatherAPIKey();
-const AWSaccessKeyId = process.env.AWS_ACCESS_KEY_ID || getAmazonKeys().access_key_id;
-const AWSsecretAccessKey = process.env.AWS_SECRET_ACCESS_KEY || getAmazonKeys().secret_access_key;
+// const { getWeatherAPIKey, getAmazonKeys } = require('./creds/creds');
+// const weatherAPIKey = process.env.WEATHER_API_KEY || getWeatherAPIKey();
+// const AWSaccessKeyId = process.env.AWS_ACCESS_KEY_ID || getAmazonKeys().access_key_id;
+// const AWSsecretAccessKey = process.env.AWS_SECRET_ACCESS_KEY || getAmazonKeys().secret_access_key;
 
-// const weatherAPIKey = process.env.WEATHER_API_KEY;
+const weatherAPIKey = process.env.WEATHER_API_KEY;
 
 //Amazon S3 config
 const s3 = new AWS.S3();
-s3.config.update(
-  {
-    accessKeyId: AWSaccessKeyId,
-    secretAccessKey: AWSsecretAccessKey,
-    subregion: 'us-east-2',
-  });
-// AWS.config.update(
+// s3.config.update(
 //   {
-//     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-//     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+//     accessKeyId: AWSaccessKeyId,
+//     secretAccessKey: AWSsecretAccessKey,
 //     subregion: 'us-east-2',
 //   });
+s3.config.update(
+  {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    subregion: 'us-east-2',
+  });
 
 // Multer config - memory storage keeps file data in a buffer
 const upload = multer({
