@@ -11,8 +11,6 @@ const { getWeatherAPIKey, getAmazonKeys } = require('./creds/creds');
 const weatherAPIKey = process.env.WEATHER_API_KEY || getWeatherAPIKey();
 const AWSaccessKeyId = process.env.AWS_ACCESS_KEY_ID || getAmazonKeys().access_key_id;
 const AWSsecretAccessKey = process.env.AWS_SECRET_ACCESS_KEY || getAmazonKeys().secret_access_key;
-console.log("AWSaccessKeyId", AWSaccessKeyId);
-console.log("AWSsecretAccessKey", AWSsecretAccessKey);
 
 // const weatherAPIKey = process.env.WEATHER_API_KEY;
 
@@ -141,10 +139,12 @@ app.get('/api/weather/radar/:latlon', (req, res, err) => {
   // });
 })
 
-app.post('/api/photoupload', upload.single('theseNamesMustMatch'), (req, res) => {
+app.post('/api/photoupload/:postType', upload.single('theseNamesMustMatch'), (req, res) => {
+	const postType = req.params.postType;
+	console.log("postType", postType);
   // req.file is the 'theseNamesMustMatch' file
   // console.log("req.file", req.file);
-  const filename = `open_tickets/${req.file.originalname}`;
+  const filename = `${postType}/${req.file.originalname}`;
   s3.putObject({
       Bucket: 'johndhammcodes.trailtracker',
       Key: filename,
