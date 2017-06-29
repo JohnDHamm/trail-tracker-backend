@@ -16,7 +16,7 @@ Node-Express-MongoDB backend for Trail Tracker app (React version)
 ###### _Features to be implemented soon:_
 1. Fetching Google Map for trails
 
-##### _Trail Tracker app (React version):_
+###### _Trail Tracker app (React version):_
 Portfolio: http://johndhammcodes.com/projects/trail
 Deployed demo: https://trailtracker-react.herokuapp.com
 GitHub: https://github.com/JohnDHamm/trail-tracker-react
