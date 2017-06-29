@@ -16,6 +16,7 @@ const weatherAPIKey = process.env.WEATHER_API_KEY;
 
 //Amazon S3 config
 const s3 = new AWS.S3();
+// localhost:3000
 // s3.config.update(
 //   {
 //     accessKeyId: AWSaccessKeyId,
@@ -157,15 +158,6 @@ app.post('/api/photoupload/:postType', upload.single('theseNamesMustMatch'), (re
     }
   )
 })
-
-
-// app.delete('/api/tasks/:id', (req, res, err) => {
-// 	const id = req.params.id
-// 	Tasks.findOneAndRemove({ _id: id})
-// 		.then(data => res.json(data))
-// 		.catch(err)
-// })
-
 
 
 connect()

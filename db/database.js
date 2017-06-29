@@ -20,7 +20,11 @@ module.exports.trails = () => mongoose.model('trail', {
 	longitude: Number,
 	mapZoom: Number,
 	numOpenTickets: Number,
-	imgUrl: String
+	imgUrl: String,
+	stewardName: String,
+	stewardImgUrl: String,
+	sponsorLogo: String,
+	sponsorUrl: String
 })
 
 module.exports.posts = () => mongoose.model('post', {
@@ -30,7 +34,6 @@ module.exports.posts = () => mongoose.model('post', {
 	postDate: String,
 	postFormatDate: String,
 	postTrailId: String,
-	postType: Number,
 	postTypeString: String,
 	ticketopen: Boolean,
 	userId: String,
