@@ -69,6 +69,11 @@ app.use(function (req, res, next) {
 const Trails = trails();
 const Posts = posts();
 
+app.get('/api/wakeup', (req, res, err) => {
+	const msg = 'Server is waking up...'
+	res.send(msg);
+})
+
 app.get('/api/trails', (req, res, err) => {
 	Trails.find()
 		.then(trails => {
